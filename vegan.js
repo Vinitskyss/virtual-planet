@@ -3,10 +3,13 @@ class Vegan extends Animal{
 		super(x, y, hunger, speed, world);
 		this.minHunger = 10;
 		this.speed = 1;
-		this.descisionRate = 10;
+		this.descisionRate = 40;
+		this.hunger = 15;
 	}
 
-
+	searchFood(){
+		
+	}
 
 	
 }

@@ -12,14 +12,17 @@ class Animal{
 		this.color = 'brown';
 		this.world = world;
 		this.moving = false;
+		this.walkDistance = 40;
+		this.descisionRate = 10;
+		this.alive = true;
 	}
 
 
 	generateIdleTarget(){
 		let done = false;
 		while (!done){
-			let x = random(0, this.world.width);
-			let y = random(0, this.world.height);
+			let x = random(-this.walkDistance + this.x, this.walkDistance + this.x);
+			let y = random(-this.walkDistance + this.y, this.walkDistance + this.y);
 			if(this.world.getTerrainType(x, y).freeSpace){
 				done = true;
 			}
@@ -38,18 +41,22 @@ class Animal{
 	idle(){
 		
 		if(this.moving == true){
-			console.log('GOGOO');
 			this.walkTo(this.targetX, this.targetY);
 		}
 
 		if(this.makeDescision(this.descisionRate) && this.moving == false){
 			this.generateIdleTarget();
 			this.moving = true;
-			console.log(this.targetY);
+			this.hunger--;
 		}
 	}
 
 	move(){
+
+		if(this.hunger == 0){
+			die();
+		}
+
 		if(this.hunger < this.minHunger){
 			this.searchFood();
 		}else{
@@ -58,15 +65,13 @@ class Animal{
 	}
 
 	walkTo(x, y){
-		let targetX = Math.sign(x - this.x);
-		let targetY = Math.sign(y - this.y);
+		let targetX = Math.sign(Math.floor(x - this.x));
+		let targetY = Math.sign(Math.floor(y - this.y));
 		let range = Math.pow(this.x - x, 2) + Math.pow(this.y-y, 2);
 		
 		if(range < this.speed * 5 && this.speed - this.error > 2){
 			this.error++;
 		}
-		console.log(x);
-		console.log(y);
 		if(range > this.speed * 3) {
 			this.x += targetX * this.speed - this.error;
 			this.y += targetY * this.speed - this.error;
@@ -83,6 +88,10 @@ class Animal{
 	}
 
 	update(){
+		if(!this.alive){
+			this.color = 'black';
+			return;
+		}
 		this.move();
 		this.show();
 	}
