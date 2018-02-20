@@ -1,7 +1,7 @@
 
 let canvas;
 let vegans = [];
-let veganCount = 10;
+let veganCount = 1;
 let world;
 
 function setup(){
@@ -14,6 +14,7 @@ function setup(){
 }
 
 function draw(){
+	noStroke();
 	background(55, 148,61);
 	for(let i = 0; i < veganCount; i++){
 		vegans[i].update();

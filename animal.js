@@ -2,7 +2,8 @@ class Animal{
 	
 	constructor(x, y, hunger, speed, world){
 		this.hunger = hunger;
-		this.minHunger = 50;
+		this.minHunger = 10;
+		this.maxHunger = 20;
 		this.x = x;
 		this.y = y;
 		this.targetX = 0;
@@ -40,10 +41,6 @@ class Animal{
 
 	idle(){
 		
-		if(this.moving == true){
-			this.walkTo(this.targetX, this.targetY);
-		}
-
 		if(this.makeDescision(this.descisionRate) && this.moving == false){
 			this.generateIdleTarget();
 			this.moving = true;
@@ -52,13 +49,22 @@ class Animal{
 	}
 
 	move(){
+		this.hunger -= 0.01;
 
 		if(this.hunger == 0){
 			die();
 		}
 
+		if(this.moving == true){
+			this.walkTo(this.targetX, this.targetY);
+			return;
+		}
+
 		if(this.hunger < this.minHunger){
-			this.searchFood();
+			if(!this.checkFood()){
+				this.searchFood();
+			}
+			
 		}else{
 			this.idle()
 		}
@@ -82,18 +88,25 @@ class Animal{
 
 	}
 
+	die(){
+		this.alive = false;
+		console.log('died!');
+	}
+
 	show(){
 		fill(this.color);
 		ellipse(this.x, this.y, 5);
 	}
 
 	update(){
+		this.show();
+
 		if(!this.alive){
 			this.color = 'black';
 			return;
 		}
 		this.move();
-		this.show();
+		
 	}
 
 }
