@@ -4,9 +4,9 @@ class Plant {
         this.y = y;
         this.vel = 10;
         this.maxVel = 10;
-        this.addRate = 0.01;
+        this.addRate = 0.1;
         this.color = color(0, 0, 0);
-        this.wait = 15000;
+        this.wait = 1500;
         this.cooldown = this.wait;
         this.image = loadImage('images/grassFull.png');
     }
@@ -31,9 +31,9 @@ class Plant {
     }
 
     grow() {
+
         if(this.vel < this.maxVel) {
             this.vel += this.addRate;
-            return;
         }
     }
 
@@ -41,10 +41,10 @@ class Plant {
         switch(this.vel) {
             case 0:
                 this.image = loadImage('images/grassEmpty.png');
-                break
+                break;
             default:
                 this.image = loadImage('images/grassFull.png');
-                break
+                break;
         }
     }
 

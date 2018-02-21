@@ -1,11 +1,13 @@
 class Animal {
 
-    constructor(x, y, hunger, speed, world, image) {
+    constructor(x, y, hunger, speed, world, image, id) {
+        this.id = id;
         this.hunger = hunger;
         this.minHunger = 10;
         this.maxHunger = 20;
         this.x = x;
         this.y = y;
+        this.sex = Math.floor(random(0, 2));
         this.targetX = 0;
         this.targetY = 0;
         this.speed = 1;
@@ -20,8 +22,10 @@ class Animal {
         this.hungerDec = 0.01;
         this.imageSrc = image;
         this.image = loadGif(this.imageSrc);
-
+        this.image_dead = loadGif('images/skull.gif');
         this.image.pause();
+        this.readyToSpawn = false;
+
     }
 
 
@@ -40,28 +44,39 @@ class Animal {
 
     makeDescision(x) {
         if(Math.floor(random(0, x)) == 1) {
-            return true;
+            let des = Math.floor(random(1, 3));
+            if(this.hunger < 10 && des == 2 && this.sex != 1){
+                return 1;
+            }
+            return des;
         }
         return false;
     }
 
     idle() {
-
-        if(this.makeDescision(this.descisionRate)) {
+        let descision = this.makeDescision(this.descisionRate);
+        if(descision == 1) {
             this.generateIdleTarget();
             this.moving = true;
             this.image.play();
 
+        }else if(descision == 2){
+            this.goSpawn();
         }
     }
 
+
     move() {
-        this.hunger -= this.hungerDec;
-
-        if(this.hunger <= 0) {
-            this.die();
+        
+        if(this.sex == 0 && this.readyToSpawn == true){
+            return;
         }
-
+        if(this.sex == 1 && this.readyToSpawn == true){
+            if(!this.checkSpawn()){
+                this.walkTo(this.targetX, this.targetY);
+            }
+            return;
+        }
         if(this.moving == true && this.checkFoodVel() == true) {
             this.walkTo(this.targetX, this.targetY);
             return;
@@ -120,18 +135,38 @@ class Animal {
 
     die() {
         this.alive = false;
+        this.image = this.image_dead;
         console.log('died!');
     }
 
     show() {
         //fill(this.color);
         //ellipse(this.x, this.y, 5);
-        image(this.image, this.x - (this.image.width / 2), this.y - (this.image.height / 2));
+        let sizes = [33, 53];
+        if(this.alive){
+            sizes = [33, 53];
+        }else if(!this.alive){
+            sizes = [32, 32];
+        }
+        image(this.image, 
+              this.x - (sizes[0] / 2),
+              this.y - (sizes[1] / 2),
+              sizes[0], sizes[1]);
     }
 
     update() {
-        this.show();
+        
+        if(this.hunger <= 0 && this.alive) {
+            this.die();
+        }
 
+        if(this.hunger < -20){
+            //this.world.vegans.splice(this.id);
+            return;
+        }
+
+        this.hunger -= this.hungerDec;
+        this.show();
         if(!this.alive) {
             this.color = 'black';
             return;
