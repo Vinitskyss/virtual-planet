@@ -1,11 +1,12 @@
 class Vegan extends Animal {
-    constructor(x, y, hunger, speed, world) {
-        super(x, y, hunger, speed, world);
-        this.minHunger = 10;
-        this.speed = 1;
-        this.descisionRate = 40;
-        this.hunger = 11;
+    constructor(x, y, hunger, speed, world, image) {
+        super(x, y, hunger, speed, world, image);
+        this.minHunger = Math.floor(random(8, 12));
+        this.speed = Math.floor(random(1, 3));
+        this.descisionRate = Math.floor(random(30, 50));
+        this.hunger = Math.floor(random(10, 20));
         this.foodTarget = -1;
+        this.hungerDec = random(0.01, 0.03);
     }
 
     searchFood() {
@@ -28,7 +29,7 @@ class Vegan extends Animal {
             this.targetY = this.world.plants[target].y;
             this.foodTarget = target;
         } else {
-            console.log(target);
+            this.idle();
         }
     }
 
@@ -38,7 +39,7 @@ class Vegan extends Animal {
         }
         let dist = Math.pow(this.x - this.world.plants[this.foodTarget].x, 2) +
             Math.pow(this.y - this.world.plants[this.foodTarget].y, 2);
-        if(this.world.plants[this.foodTarget].vel > 0 && dist < 8) {
+        if(this.world.plants[this.foodTarget].vel > 0 && dist < 16) {
             let toFeed = this.maxHunger - this.hunger;
             if(this.world.plants[this.foodTarget].vel >= toFeed) {
                 this.hunger += toFeed;

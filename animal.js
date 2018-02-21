@@ -1,6 +1,6 @@
 class Animal {
 
-    constructor(x, y, hunger, speed, world) {
+    constructor(x, y, hunger, speed, world, image) {
         this.hunger = hunger;
         this.minHunger = 10;
         this.maxHunger = 20;
@@ -17,6 +17,11 @@ class Animal {
         this.descisionRate = 10;
         this.alive = true;
         this.foodTarget = -1;
+        this.hungerDec = 0.01;
+        this.imageSrc = image;
+        this.image = loadGif(this.imageSrc);
+
+        this.image.pause();
     }
 
 
@@ -45,12 +50,13 @@ class Animal {
         if(this.makeDescision(this.descisionRate)) {
             this.generateIdleTarget();
             this.moving = true;
-            this.hunger--;
+            this.image.play();
+
         }
     }
 
     move() {
-        this.hunger -= 0.011;
+        this.hunger -= this.hungerDec;
 
         if(this.hunger <= 0) {
             this.die();
@@ -62,6 +68,7 @@ class Animal {
         }
 
         if(this.hunger < this.minHunger) {
+
             if(!this.checkFood()) {
                 this.searchFood();
             }
@@ -71,9 +78,32 @@ class Animal {
         }
     }
 
+    endWalk() {
+        this.moving = false;
+        this.error = 0;
+
+        try {
+            this.image.pause();
+            this.image.frame(1);
+        } catch(e) {
+            console.log();
+        }
+
+    }
+
     walkTo(x, y) {
+        this.image.play();
         let targetX = Math.sign(Math.floor(x - this.x));
         let targetY = Math.sign(Math.floor(y - this.y));
+        if(Math.pow(x - this.x, 2) < 2) {
+            targetX = 0;
+        }
+        if(Math.pow(y - this.y, 2) < 2) {
+            targetY = 0;
+        }
+        if(targetX == 0 && targetY == 0) {
+            this.endWalk();
+        }
         let range = Math.pow(this.x - x, 2) + Math.pow(this.y - y, 2);
 
         if(range < this.speed * 5 && this.speed - this.error > 2) {
@@ -83,8 +113,7 @@ class Animal {
             this.x += targetX * this.speed - this.error;
             this.y += targetY * this.speed - this.error;
         } else {
-            this.moving = false;
-            this.error = 0;
+            this.endWalk();
         }
 
     }
@@ -95,8 +124,9 @@ class Animal {
     }
 
     show() {
-        fill(this.color);
-        ellipse(this.x, this.y, 5);
+        //fill(this.color);
+        //ellipse(this.x, this.y, 5);
+        image(this.image, this.x - (this.image.width / 2), this.y - (this.image.height / 2));
     }
 
     update() {

@@ -24,7 +24,10 @@ class World {
 
     update() {
         for(let i = 0; i < this.plantsCount; i++) {
+
             this.plants[i].update();
+
+
         }
     }
 
