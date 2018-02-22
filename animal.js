@@ -11,7 +11,7 @@ class Animal {
         this.sex = Math.floor(random(0, 2));
         this.targetX = 0;
         this.targetY = 0;
-        this.speed = 1;
+        this.speed = speed;
         this.error = 0;
         this.color = 'brown';
         this.world = world;

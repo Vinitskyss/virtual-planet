@@ -23,7 +23,7 @@ class World {
     seedRabbits(count) {
         for (let i = 0; i < count; i++) {
             this.vegans.push(new Vegan(random(0, this.width), random(0, this.height),
-                Math.floor(random(8, 12)), 20, this, this.rabbitGif, this.animalId));
+                Math.floor(random(8, 12)), Math.floor(random(1, 2.3)), this, this.rabbitGif, this.animalId));
             this.animalId++;
         }
     }
@@ -49,7 +49,7 @@ class World {
                 }
                 if (this.vegans[i].checkSpawn() && this.vegans[i].sex == 1) {
                     this.vegans.push(new Vegan(this.vegans[i].x, this.vegans[i].y,
-                        14, 20, this, this.rabbitGif, this.animalId));
+                        14, Math.floor(random(1, 2.3)), this, this.rabbitGif, this.animalId));
                     this.animalId++;
                     console.log('SPAWNED!');
                     console.log(this.vegans[i].x);

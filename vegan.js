@@ -2,7 +2,7 @@ class Vegan extends Animal {
     constructor(x, y, hunger, speed, world, image, id) {
         super(x, y, hunger, speed, world, image, id);
         this.minHunger = Math.floor(random(8, 12));
-        this.speed = Math.floor(random(1, 2.3));
+        this.speed = speed;
         this.descisionRate = Math.floor(random(30, 50));
         this.hunger = hunger;
         this.foodTarget = -1;
