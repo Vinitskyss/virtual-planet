@@ -5,6 +5,7 @@ class Animal {
         this.hunger = hunger;
         this.minHunger = 10;
         this.maxHunger = 20;
+        this.hungry = this.hunger < this.minHunger;
         this.x = x;
         this.y = y;
         this.sex = Math.floor(random(0, 2));
@@ -31,10 +32,10 @@ class Animal {
 
     generateIdleTarget() {
         let done = false;
-        while(!done) {
+        while (!done) {
             let x = random(-this.walkDistance + this.x, this.walkDistance + this.x);
             let y = random(-this.walkDistance + this.y, this.walkDistance + this.y);
-            if(this.world.getTerrainType(x, y).freeSpace) {
+            if (this.world.getTerrainType(x, y).freeSpace) {
                 done = true;
             }
             this.targetX = x;
@@ -43,9 +44,9 @@ class Animal {
     }
 
     makeDescision(x) {
-        if(Math.floor(random(0, x)) == 1) {
+        if (Math.floor(random(0, x)) == 1) {
             let des = Math.floor(random(1, 3));
-            if(this.hunger < 10 && des == 2 && this.sex != 1){
+            if (this.hunger < 10 && des == 2 && this.sex != 1) {
                 return 1;
             }
             return des;
@@ -55,43 +56,44 @@ class Animal {
 
     idle() {
         let descision = this.makeDescision(this.descisionRate);
-        if(descision == 1) {
+        if (descision == 1) {
             this.generateIdleTarget();
             this.moving = true;
             this.image.play();
 
-        }else if(descision == 2){
-            this.goSpawn();
+        } else if (descision == 2) {
+            if (!this.goSpawn()) {
+                this.idle();
+            }
         }
     }
 
 
     move() {
-        
-        if(this.sex == 0 && this.readyToSpawn == true){
-            return;
-        }
-        if(this.sex == 1 && this.readyToSpawn == true){
-            if(!this.checkSpawn()){
-                this.walkTo(this.targetX, this.targetY);
-            }
-            return;
-        }
-        if(this.moving == true && this.checkFoodVel() == true) {
-            this.walkTo(this.targetX, this.targetY);
-            return;
-        }
 
-        if(this.hunger < this.minHunger) {
-
-            if(!this.checkFood()) {
+        if (this.hungry) {
+            this.readyToSpawn = false;
+            if (!this.checkFood()) {
                 this.searchFood();
-            }
 
-        } else {
-            this.idle()
+            }
         }
+
+        if (this.readyToSpawn) {
+            if (this.sex == 0) {
+                return;
+            }
+            if (this.sex == 1) {
+                if (!this.checkSpawn()) {
+                    this.walkTo(this.targetX, this.targetY);
+                }
+                return;
+            }
+        }
+        
+        this.idle()
     }
+
 
     endWalk() {
         this.moving = false;
@@ -100,7 +102,7 @@ class Animal {
         try {
             this.image.pause();
             this.image.frame(1);
-        } catch(e) {
+        } catch (e) {
             console.log();
         }
 
@@ -110,21 +112,21 @@ class Animal {
         this.image.play();
         let targetX = Math.sign(Math.floor(x - this.x));
         let targetY = Math.sign(Math.floor(y - this.y));
-        if(Math.pow(x - this.x, 2) < 2) {
+        if (Math.pow(x - this.x, 2) < 2) {
             targetX = 0;
         }
-        if(Math.pow(y - this.y, 2) < 2) {
+        if (Math.pow(y - this.y, 2) < 2) {
             targetY = 0;
         }
-        if(targetX == 0 && targetY == 0) {
+        if (targetX == 0 && targetY == 0) {
             this.endWalk();
         }
         let range = Math.pow(this.x - x, 2) + Math.pow(this.y - y, 2);
 
-        if(range < this.speed * 5 && this.speed - this.error > 2) {
+        if (range < this.speed * 5 && this.speed - this.error > 2) {
             this.error++;
         }
-        if(range > this.speed * 3) {
+        if (range > this.speed * 3) {
             this.x += targetX * this.speed - this.error;
             this.y += targetY * this.speed - this.error;
         } else {
@@ -143,31 +145,32 @@ class Animal {
         //fill(this.color);
         //ellipse(this.x, this.y, 5);
         let sizes = [33, 53];
-        if(this.alive){
+        if (this.alive) {
             sizes = [33, 53];
-        }else if(!this.alive){
+        } else if (!this.alive) {
             sizes = [32, 32];
         }
-        image(this.image, 
-              this.x - (sizes[0] / 2),
-              this.y - (sizes[1] / 2),
-              sizes[0], sizes[1]);
+        image(this.image,
+            this.x - (sizes[0] / 2),
+            this.y - (sizes[1] / 2),
+            sizes[0], sizes[1]);
     }
 
-    update() {
-        
-        if(this.hunger <= 0 && this.alive) {
+    update(world) {
+
+        if (this.hunger <= 0 && this.alive) {
             this.die();
         }
 
-        if(this.hunger < -20){
+        if (this.hunger < -20) {
             //this.world.vegans.splice(this.id);
             return;
         }
-
+        this.world = world;
         this.hunger -= this.hungerDec;
+        this.hungry = this.hunger < this.minHunger;
         this.show();
-        if(!this.alive) {
+        if (!this.alive) {
             this.color = 'black';
             return;
         }
