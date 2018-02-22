@@ -1,6 +1,6 @@
 class Vegan extends Animal {
-    constructor(x, y, hunger, speed, world, image, id) {
-        super(x, y, hunger, speed, world, image, id);
+    constructor(x, y, hunger, speed, world, image, id, gen) {
+        super(x, y, hunger, speed, world, image, id, gen);
         this.minHunger = Math.floor(random(8, 12));
         this.speed = speed;
         this.descisionRate = Math.floor(random(30, 50));
@@ -71,8 +71,9 @@ class Vegan extends Animal {
             //let newDist = Math.pow(this.x - this.world.vegans[i].x, 2) +
             //Math.pow(this.y - this.world.vegans[i].y, 2);
             if (this.world.vegans[i].sex != this.sex &&
-                this.world.vegans[i].hunger > 15 &&
-                this.world.vegans[i].readyToSpawn == false) {
+                this.world.vegans[i].hunger > 15
+                && this.world.vegans[i].readyToSpawn == false
+            ) {
                 console.log('GO SPAWN!');
                 this.readyToSpawn = true;
                 this.world.vegans[i].readyToSpawn = true;

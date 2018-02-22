@@ -1,6 +1,6 @@
 class Animal {
 
-    constructor(x, y, hunger, speed, world, image, id) {
+    constructor(x, y, hunger, speed, world, image, id, gen) {
         this.id = id;
         this.hunger = hunger;
         this.minHunger = 10;
@@ -9,6 +9,7 @@ class Animal {
         this.x = x;
         this.y = y;
         this.sex = Math.floor(random(0, 2));
+        this.generation = gen;
         this.targetX = 0;
         this.targetY = 0;
         this.speed = speed;
