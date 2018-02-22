@@ -28,7 +28,6 @@ class Vegan extends Animal {
             this.targetX = this.world.plants[target].x;
             this.targetY = this.world.plants[target].y;
             this.foodTarget = target;
-            this.walkTo(this.targetX, this.targetY);
 
         } else {
             this.idle();
