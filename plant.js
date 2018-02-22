@@ -3,26 +3,26 @@ class Plant {
         this.x = x;
         this.y = y;
         this.vel = 10;
-        this.maxVel = 10;
+        this.maxVel = 15;
         this.addRate = 0.1;
-        this.color = color(0, 0, 0);
         this.wait = 1500;
         this.cooldown = this.wait;
         this.image = loadImage('images/grassFull.png');
     }
+
     update() {
 
         this.show();
-        if(this.cooldown < this.wait) {
+        if (this.cooldown < this.wait) {
             this.cooldown++;
-            if(this.cooldown == this.wait) {
+            if (this.cooldown == this.wait) {
                 this.vel = 1;
                 this.setImage();
             }
             return;
         }
 
-        if(this.vel == 0) {
+        if (this.vel == 0) {
             this.cooldown = 0;
             this.setImage();
         }
@@ -32,13 +32,13 @@ class Plant {
 
     grow() {
 
-        if(this.vel < this.maxVel) {
+        if (this.vel < this.maxVel) {
             this.vel += this.addRate;
         }
     }
 
     setImage() {
-        switch(this.vel) {
+        switch (this.vel) {
             case 0:
                 this.image = loadImage('images/grassEmpty.png');
                 break;
@@ -50,12 +50,6 @@ class Plant {
 
 
     show() {
-        this.color = color(
-            60 - map(this.vel, 0, this.maxVel, 50, 5),
-            230 - map(this.vel, 0, this.maxVel, 220, 22),
-            55 - map(this.vel, 0, this.maxVel, 45, 4));
-        //fill(this.color);
         image(this.image, this.x, this.y, this.image.width, this.image.height);
-        //ellipse(this.x, this.y, 5);
     }
 }

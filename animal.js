@@ -46,7 +46,7 @@ class Animal {
     makeDescision(x) {
         if (Math.floor(random(0, x)) == 1) {
             let des = Math.floor(random(1, 3));
-            if (this.hunger < 10 && des == 2 && this.sex != 1) {
+            if (this.hunger < 15 && des == 2 && this.sex != 1) {
                 return 1;
             }
             return des;
@@ -59,11 +59,13 @@ class Animal {
         if (descision == 1) {
             this.generateIdleTarget();
             this.image.play();
-
+            this.walkTo(this.targetX, this.targetY);
         } else if (descision == 2) {
             if (!this.goSpawn()) {
                 this.idle();
             }
+        } else {
+            this.walkTo(this.targetX, this.targetY);
         }
     }
 

@@ -2,9 +2,9 @@ class Vegan extends Animal {
     constructor(x, y, hunger, speed, world, image, id) {
         super(x, y, hunger, speed, world, image, id);
         this.minHunger = Math.floor(random(8, 12));
-        this.speed = Math.floor(random(1, 3));
+        this.speed = Math.floor(random(1, 2.3));
         this.descisionRate = Math.floor(random(30, 50));
-        this.hunger = Math.floor(random(10, 20));
+        this.hunger = hunger;
         this.foodTarget = -1;
         this.hungerDec = random(0.01, 0.03);
     }
@@ -14,7 +14,7 @@ class Vegan extends Animal {
         let dist = Infinity;
         let target = -1;
         for (let i = 0; i < this.world.plants.length; i++) {
-            if (this.world.plants[i].vel > 5) {
+            if (this.world.plants[i].vel > 0) {
                 let newDist = Math.pow(this.x - this.world.plants[i].x, 2) +
                     Math.pow(this.y - this.world.plants[i].y, 2);
                 if (newDist < dist) {
@@ -59,11 +59,14 @@ class Vegan extends Animal {
     }
 
     goSpawn() {
+        if (this.hunger < 15) {
+            return false;
+        }
         for (let i = 0; i < this.world.vegans.length; i++) {
             //let newDist = Math.pow(this.x - this.world.vegans[i].x, 2) +
             //Math.pow(this.y - this.world.vegans[i].y, 2);
             if (this.world.vegans[i].sex != this.sex &&
-                this.world.vegans[i].hunger >= 10 &&
+                this.world.vegans[i].hunger > 15 &&
                 this.world.vegans[i].readyToSpawn == false) {
                 console.log('GO SPAWN!');
                 this.readyToSpawn = true;
@@ -83,7 +86,7 @@ class Vegan extends Animal {
             let newDist = Math.pow(this.x - this.world.vegans[i].x, 2) +
                 Math.pow(this.y - this.world.vegans[i].y, 2);
             if (this.world.vegans[i].sex != this.sex &&
-                this.world.vegans[i].hunger >= 10 &&
+                this.world.vegans[i].hunger >= 15 &&
                 this.world.vegans[i].readyToSpawn == true &&
                 newDist < 20) {
 
