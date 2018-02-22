@@ -4,6 +4,7 @@ class World {
         this.height = height;
         this.plants = [];
         this.vegans = [];
+        this.animalId = 0;
         this.veganCount = veganCount;
         this.plantsCount = plantsCount;
         this.rabbitGif = rabbitGif;
@@ -22,7 +23,8 @@ class World {
     seedRabbits(count) {
         for (let i = 0; i < count; i++) {
             this.vegans.push(new Vegan(random(0, this.width), random(0, this.height),
-                100, 20, this, this.rabbitGif, i));
+                100, 20, this, this.rabbitGif, this.animalId));
+            this.animalId++;
         }
     }
 
@@ -42,10 +44,10 @@ class World {
         for (let i = 0; i < this.vegans.length; i++) {
             if (this.vegans[i].image.loaded()) {
                 this.vegans[i].update(this);
-                if (this.vegans[i].checkSpawn()) {
-                    this.vegans.push(new Vegan(random(0, this.width), random(0, this.height),
-                        100, 20, this, this.rabbitGif, 0));
-
+                if (this.vegans[i].checkSpawn() && this.vegans[i].sex == 1) {
+                    this.vegans.push(new Vegan(this.vegans[i].x, this.vegans[i].y,
+                        100, 20, this, this.rabbitGif, this.animalId));
+                    this.animalId++;
                     console.log('SPAWNED!');
                     console.log(this.vegans[i].x);
                     console.log(this.vegans[i].y);

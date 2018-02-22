@@ -58,7 +58,6 @@ class Animal {
         let descision = this.makeDescision(this.descisionRate);
         if (descision == 1) {
             this.generateIdleTarget();
-            this.moving = true;
             this.image.play();
 
         } else if (descision == 2) {
@@ -81,6 +80,7 @@ class Animal {
 
         if (this.readyToSpawn) {
             if (this.sex == 0) {
+                this.endWalk();
                 return;
             }
             if (this.sex == 1) {
@@ -90,7 +90,7 @@ class Animal {
                 return;
             }
         }
-        
+
         this.idle()
     }
 

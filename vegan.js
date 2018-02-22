@@ -1,6 +1,6 @@
 class Vegan extends Animal {
     constructor(x, y, hunger, speed, world, image, id) {
-        super(x, y, hunger, speed, world, image);
+        super(x, y, hunger, speed, world, image, id);
         this.minHunger = Math.floor(random(8, 12));
         this.speed = Math.floor(random(1, 3));
         this.descisionRate = Math.floor(random(30, 50));
@@ -57,7 +57,7 @@ class Vegan extends Animal {
 
         return false;
     }
-    
+
     goSpawn() {
         for (let i = 0; i < this.world.vegans.length; i++) {
             //let newDist = Math.pow(this.x - this.world.vegans[i].x, 2) +
