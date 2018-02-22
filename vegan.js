@@ -6,7 +6,7 @@ class Vegan extends Animal {
         this.descisionRate = Math.floor(random(30, 50));
         this.hunger = hunger;
         this.foodTarget = -1;
-        this.hungerDec = random(0.01, 0.03);
+        this.hungerDec = random(0.01, 0.06);
     }
 
     searchFood() {
@@ -39,8 +39,14 @@ class Vegan extends Animal {
         if (this.foodTarget == -1) {
             return false;
         }
-        let dist = Math.pow(this.x - this.world.plants[this.foodTarget].x, 2) +
-            Math.pow(this.y - this.world.plants[this.foodTarget].y, 2);
+        let dist;
+        try {
+            dist = Math.pow(this.x - this.world.plants[this.foodTarget].x, 2) +
+                Math.pow(this.y - this.world.plants[this.foodTarget].y, 2);
+        } catch (e) {
+            this.searchFood();
+            return false;
+        }
         if (this.world.plants[this.foodTarget].vel > 0 && dist < 16) {
             let toFeed = this.maxHunger - this.hunger;
             if (this.world.plants[this.foodTarget].vel >= toFeed) {

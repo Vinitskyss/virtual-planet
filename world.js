@@ -9,7 +9,7 @@ class World {
         this.plantsCount = plantsCount;
         this.rabbitGif = rabbitGif;
         this.seedRabbits(this.veganCount);
-        this.seedPlants();
+        this.seedPlants(this.plantsCount, 10);
     }
 
     getTerrainType(x, y) {
@@ -28,18 +28,35 @@ class World {
         }
     }
 
-    seedPlants() {
-        for (let i = 0; i < this.plantsCount; i++) {
+    seedPlants(count, vel) {
+        for (let i = 0; i < count; i++) {
             let x = random(0, this.width);
             let y = random(0, this.height);
-            this.plants.push(new Plant(x, y));
+            this.plants.push(new Plant(x, y, vel));
         }
     }
 
-    update() {
-        for (let i = 0; i < this.plantsCount; i++) {
+    updatePlants() {
+        for (let i = 0; i < this.plants.length; i++) {
             this.plants[i].update();
         }
+
+        for (let i = this.plants.length - 1; i > 0; i--) {
+            if (this.plants[i].vel <= 0) {
+                this.plants.splice(i, 1);
+            }
+        }
+        let prob = this.plantsCount - this.plants.length;
+        let r = random(3, this.plantsCount * 2);
+        if (prob > r) {
+            this.seedPlants(1, 5);
+        }
+
+    }
+
+    update() {
+
+        this.updatePlants();
 
         for (let i = 0; i < this.vegans.length; i++) {
             if (this.vegans[i].image.loaded()) {
@@ -58,6 +75,13 @@ class World {
                 }
             }
         }
+
+        for (let i = this.vegans.length - 1; i > 0; i--) {
+            if (this.vegans[i].hunger <= -20) {
+                this.vegans.splice(i, 1);
+            }
+        }
+
     }
 
 }
