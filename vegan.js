@@ -15,8 +15,8 @@ class Vegan extends Animal {
         let target = -1;
         for (let i = 0; i < this.world.plants.length; i++) {
             if (this.world.plants[i].vel > 0) {
-                let newDist = Math.pow(this.x - this.world.plants[i].x, 2) +
-                    Math.pow(this.y - this.world.plants[i].y, 2);
+                let newDist = Math.sqrt(Math.pow(this.x - this.world.plants[i].x, 2) +
+                    Math.pow(this.y - this.world.plants[i].y, 2));
                 if (newDist < dist) {
                     dist = newDist;
                     target = i;
@@ -40,8 +40,8 @@ class Vegan extends Animal {
         }
         let dist;
         try {
-            dist = Math.pow(this.x - this.world.plants[this.foodTarget].x, 2) +
-                Math.pow(this.y - this.world.plants[this.foodTarget].y, 2);
+            dist = Math.sqrt(Math.pow(this.x - this.world.plants[this.foodTarget].x, 2) +
+                Math.pow(this.y - this.world.plants[this.foodTarget].y, 2));
         } catch (e) {
             this.searchFood();
             return false;
@@ -68,13 +68,14 @@ class Vegan extends Animal {
             return false;
         }
         for (let i = 0; i < this.world.vegans.length; i++) {
-            //let newDist = Math.pow(this.x - this.world.vegans[i].x, 2) +
-            //Math.pow(this.y - this.world.vegans[i].y, 2);
+            let dist = Math.sqrt(Math.pow(this.x - this.world.vegans[i].x, 2) +
+                Math.pow(this.y - this.world.vegans[i].y, 2));
             if (this.world.vegans[i].sex != this.sex &&
                 this.world.vegans[i].hunger > 15
-                && this.world.vegans[i].readyToSpawn == false
+                //&& this.world.vegans[i].readyToSpawn == false
+                && dist < 500
             ) {
-                console.log('GO SPAWN!');
+                console.log(dist);
                 this.readyToSpawn = true;
                 this.world.vegans[i].readyToSpawn = true;
                 this.targetX = this.world.vegans[i].x;
@@ -88,9 +89,10 @@ class Vegan extends Animal {
     }
 
     checkSpawn() {
+        //return true;
         for (let i = 0; i < this.world.vegans.length; i++) {
-            let newDist = Math.pow(this.x - this.world.vegans[i].x, 2) +
-                Math.pow(this.y - this.world.vegans[i].y, 2);
+            let newDist = Math.sqrt(Math.pow(this.x - this.world.vegans[i].x, 2) +
+                Math.pow(this.y - this.world.vegans[i].y, 2));
             if (this.world.vegans[i].sex != this.sex &&
                 this.world.vegans[i].hunger >= 15 &&
                 this.world.vegans[i].readyToSpawn == true &&
@@ -98,9 +100,9 @@ class Vegan extends Animal {
 
                 this.readyToSpawn = false;
                 this.world.vegans[i].readyToSpawn = false;
-                this.hunger = 9;
-                this.world.vegans[i].hunger = 9;
-                return true;
+                this.hunger -= 4;
+                this.world.vegans[i].hunger -= 4;
+                return this.world.vegans[i].id;
             }
 
         }

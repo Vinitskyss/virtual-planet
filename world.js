@@ -12,12 +12,32 @@ class World {
         this.seedPlants(this.plantsCount, 10);
     }
 
+    getMaxGeneration(name) {
+        let gen = 1;
+        let varname = eval("this." + name);
+        for (let i = 0; i < varname.length; i++) {
+            if (varname[i].generation > gen) {
+                gen = varname[i].generation;
+            }
+        }
+        return gen;
+    }
+
     getTerrainType(x, y) {
         let freeSpace = true;
         if (x < 1 || x > this.width || y < 1 || y > this.height) {
             freeSpace = false;
         }
         return {freeSpace: freeSpace};
+    }
+
+    getAnimalById(id, name) {
+        let varname = eval("this." + name);
+        for (let i = 0; i < varname.length; i++) {
+            if (varname[i].id == id) {
+                return varname[i];
+            }
+        }
     }
 
     seedRabbits(count, gen) {
@@ -58,11 +78,16 @@ class World {
         for (let i = 0; i < this.vegans.length; i++) {
             if (this.vegans[i].image.loaded()) {
                 this.vegans[i].update(this);
+                let checkSpawn = this.vegans[i].checkSpawn();
+                if (checkSpawn && this.vegans[i].sex == 1) {
+                    let father = this.vegans[i];
+                    let mother = this.getAnimalById(checkSpawn, 'vegans');
+                    let gen = Math.max(father.generation, mother.generation);
+                    this.vegans.push(new Vegan(mother.x, mother.y,
+                        14, Math.floor(random(1, 2.3)), this, this.rabbitGif, this.animalId, gen + 1));
 
-                if (this.vegans[i].checkSpawn() && this.vegans[i].sex == 1) {
-                    this.vegans.push(new Vegan(this.vegans[i].x, this.vegans[i].y,
-                        14, Math.floor(random(1, 2.3)), this, this.rabbitGif, this.animalId, this.vegans[i].generation + 1));
                     this.animalId++;
+
                     console.log('SPAWNED!');
                     console.log(this.vegans[i].x);
                     console.log(this.vegans[i].y);
