@@ -14,9 +14,7 @@ class Animal {
         this.targetY = 0;
         this.speed = speed;
         this.error = 0;
-        this.color = 'brown';
         this.world = world;
-        //this.moving = false;
         this.walkDistance = 40;
         this.descisionRate = 10;
         this.alive = true;
@@ -77,7 +75,8 @@ class Animal {
             this.readyToSpawn = false;
             if (!this.checkFood()) {
                 this.searchFood();
-
+                this.walkTo(this.targetX, this.targetY);
+                return;
             }
         }
 
@@ -99,12 +98,14 @@ class Animal {
 
 
     endWalk() {
-        //this.moving = false;
+        
         this.error = 0;
 
         try {
-            this.image.pause();
-            this.image.frame(1);
+            if(this.image.playing()){ 
+                this.image.pause();
+                this.image.frame(1);   
+            }
         } catch (e) {
             console.log();
         }
@@ -112,7 +113,7 @@ class Animal {
     }
 
     walkTo(x, y) {
-        this.image.play();
+        
         let targetX = Math.sign(Math.floor(x - this.x));
         let targetY = Math.sign(Math.floor(y - this.y));
         if (Math.pow(x - this.x, 2) < 2) {
@@ -130,6 +131,9 @@ class Animal {
             this.error++;
         }
         if (range > this.speed * 3) {
+            if(!this.image.playing()){
+                this.image.play();    
+            }
             this.x += targetX * this.speed - this.error;
             this.y += targetY * this.speed - this.error;
         } else {
@@ -145,8 +149,6 @@ class Animal {
     }
 
     show() {
-        //fill(this.color);
-        //ellipse(this.x, this.y, 5);
         let sizes = [33, 53];
         if (this.alive) {
             sizes = [33, 53];
@@ -166,7 +168,6 @@ class Animal {
         }
 
         if (this.hunger < -20) {
-            //this.world.vegans.splice(this.id);
             return;
         }
         this.world = world;
@@ -174,7 +175,6 @@ class Animal {
         this.hungry = this.hunger < this.minHunger;
         this.show();
         if (!this.alive) {
-            this.color = 'black';
             return;
         }
         this.move();

@@ -1,5 +1,5 @@
 let canvas;
-let veganCount = 20;
+let veganCount = 10;
 let world;
 let plantsCount = veganCount * 4.5;
 
