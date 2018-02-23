@@ -6,7 +6,7 @@ class Vegan extends Animal {
         this.descisionRate = Math.floor(random(30, 50));
         this.hunger = hunger;
         this.foodTarget = -1;
-        this.hungerDec = random(0.01, 0.06);
+        this.hungerDec = random(0.01, 0.03);
     }
 
     searchFood() {
