@@ -54,16 +54,11 @@ class World {
 
     }
 
-    update() {
-
-        this.updatePlants();
-
+    updateVegans() {
         for (let i = 0; i < this.vegans.length; i++) {
             if (this.vegans[i].image.loaded()) {
                 this.vegans[i].update(this);
-                if (this.vegans[i].alive == false) {
-                    //this.vegans.splice(i);
-                }
+
                 if (this.vegans[i].checkSpawn() && this.vegans[i].sex == 1) {
                     this.vegans.push(new Vegan(this.vegans[i].x, this.vegans[i].y,
                         14, Math.floor(random(1, 2.3)), this, this.rabbitGif, this.animalId, this.vegans[i].generation + 1));
@@ -81,6 +76,13 @@ class World {
                 this.vegans.splice(i, 1);
             }
         }
+    }
+
+    update() {
+
+        this.updatePlants();
+
+        this.updateVegans();
 
     }
 

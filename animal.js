@@ -16,7 +16,7 @@ class Animal {
         this.error = 0;
         this.color = 'brown';
         this.world = world;
-        this.moving = false;
+        //this.moving = false;
         this.walkDistance = 40;
         this.descisionRate = 10;
         this.alive = true;
@@ -99,7 +99,7 @@ class Animal {
 
 
     endWalk() {
-        this.moving = false;
+        //this.moving = false;
         this.error = 0;
 
         try {

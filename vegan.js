@@ -24,7 +24,7 @@ class Vegan extends Animal {
             }
         }
         if (target >= 0) {
-            this.moving = true;
+            //this.moving = true;
             this.targetX = this.world.plants[target].x;
             this.targetY = this.world.plants[target].y;
             this.foodTarget = target;
@@ -55,7 +55,7 @@ class Vegan extends Animal {
                 this.hunger += this.world.plants[this.foodTarget].vel
                 this.world.plants[this.foodTarget].vel = 0;
             }
-            this.moving = false;
+            //this.moving = false;
             this.foodTarget = -1;
             return true;
         }
