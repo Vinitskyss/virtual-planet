@@ -9,7 +9,7 @@ class Rabbit extends Vegan {
         this.maxHunger = 20;
         this.hungerDec = random(0.01, 0.03);
         this.walkDistance = 40;
-        this.descisionRate = 10;
+        this.decisionRate = 10;
         this.hungerDec = 0.01;
         this.animalType = 'rabbits';
     }

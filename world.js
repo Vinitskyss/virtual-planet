@@ -92,26 +92,23 @@ class World extends WorldController {
                     type[j].update();
                 }
 
-                if (type[j].hungry || type[j].readyToSpawn) {
+                //reasons to update world in each animal
+                if (type[j].hungry || type[j].readyToSpawn || true) {
                     type[j].updateWorld(this);
                 }
 
                 if (type[j].checkSpawn() && type[j].sex == 1) {
-                    this.spawnAnimal(animalType, 1, type[j].generation + 1,
-                        type[j].x, type[j].y);
+                    this.spawnAnimal(animalType, 1, type[j].generation + 1, type[j].x, type[j].y);
                     this.print("SPAWNED", type[j].x, type[j].y);
                 }
             }
+            for (let j = type.length - 1; j > 0; j--) {
+                if (type[j].hunger < -20) {
+                    type.splice(j, 1);
+                    j = 0;
+                }
+            }
         }
-    }
-
-
-    getTerrainType(x, y) {
-        let freeSpace = true;
-        if (x < 1 || x > this.width || y < 1 || y > this.height) {
-            freeSpace = false;
-        }
-        return {freeSpace: freeSpace};
     }
 
     update() {

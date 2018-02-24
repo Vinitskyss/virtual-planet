@@ -5,7 +5,6 @@ class Vegan extends Animal {
     }
 
     searchFood() {
-
         let dist = Infinity;
         let target = -1;
         for (let i = 0; i < this.world.plants.food.length; i++) {
@@ -22,7 +21,6 @@ class Vegan extends Animal {
             this.targetX = this.world.plants.food[target].x;
             this.targetY = this.world.plants.food[target].y;
             this.foodTarget = target;
-
         } else {
             this.idle();
         }
@@ -37,10 +35,11 @@ class Vegan extends Animal {
             dist = Math.sqrt(Math.pow(this.x - this.world.plants.food[this.foodTarget].x, 2) +
                 Math.pow(this.y - this.world.plants.food[this.foodTarget].y, 2));
         } catch (e) {
+            //food despawned
             this.searchFood();
             return false;
         }
-        if (this.world.plants.food[this.foodTarget].vel > 0 && dist < 16) {
+        if (this.world.plants.food[this.foodTarget].vel > 0 && dist < 8) {
             let toFeed = this.maxHunger - this.hunger;
             if (this.world.plants.food[this.foodTarget].vel >= toFeed) {
                 this.hunger += toFeed;
@@ -52,9 +51,6 @@ class Vegan extends Animal {
             this.foodTarget = -1;
             return true;
         }
-
         return false;
     }
-
-
 }
