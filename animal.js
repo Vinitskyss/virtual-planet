@@ -52,7 +52,6 @@ class Animal {
         let descision = this.makeDescision(this.descisionRate);
         if (descision == 1) {
             this.generateIdleTarget();
-            this.image.play();
             this.walkTo(this.targetX, this.targetY);
         } else if (descision == 2) {
             if (!this.goSpawn()) {
@@ -146,9 +145,10 @@ class Animal {
             if(this.image.playing()){ 
                 this.image.pause();
                 this.image.frame(1);   
+               // console.log('ENDWALK')
             }
         } catch (e) {
-            console.log();
+            console.log('img err');
         }
 
     }
@@ -173,7 +173,8 @@ class Animal {
         }
         if (range > this.speed * 3) {
             if(!this.image.playing()){
-                this.image.play();    
+                this.image.play();  
+                //console.log('PLAY');  
             }
             this.x += targetX * this.speed - this.error;
             this.y += targetY * this.speed - this.error;
@@ -189,7 +190,11 @@ class Animal {
         console.log('died!');
     }
 
-    update(world) {
+    updateWorld(world){
+        this.world = world;
+    }
+
+    update() {
 
         if (this.hunger <= 0 && this.alive) {
             this.die();

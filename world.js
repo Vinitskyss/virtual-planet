@@ -70,7 +70,11 @@ class World extends WorldController {
             for (let j = 0; j < type.length; j++) {
                 
                 if (type[j].image.loaded()) {
-                    type[j].update(this);
+                    type[j].update();
+                }
+
+                if(type[j].hungry || type[j].readyToSpawn){
+                    type[j].updateWorld(this);
                 }
 
                 if (type[j].checkSpawn() && type[j].sex == 1) {
