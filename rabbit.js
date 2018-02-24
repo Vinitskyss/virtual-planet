@@ -7,6 +7,7 @@ class Rabbit extends Vegan{
         this.image.pause();
         this.minHunger = 10;
         this.maxHunger = 20;
+        this.hungerDec = random(0.01, 0.03);
         this.walkDistance = 40;
         this.descisionRate = 10;
         this.hungerDec = 0.01;
