@@ -5,56 +5,76 @@ class World extends WorldController {
         this.spawnAnimal('rabbits', this.config.animals.rabbits, 1);
         this.seedPlant('food', this.config.plants.food);
     }
-    
-    spawnAnimal(type, count, gen, x,y, hunger = Math.floor(random(8, 12)),
-    speed = Math.floor(random(1, 2.3)))
-    {
-        let classes = {'rabbits':'Rabbit'};
-        let className = eval(classes[type]);
-        let animal = eval("this.animals."+type);
+
+    spawnAnimal(type, count, gen, x, y, hunger, speed) {
+
+        let className = eval(this.animalTypes[type]);
+        let animals = eval("this.animals." + type);
+
         let rx = x == undefined;
         let ry = y == undefined;
+        let rh = hunger == undefined;
+        let rs = speed == undefined;
+
         for (let i = 0; i < count; i++) {
-            if(rx){ x = random(0, this.width);}
-            if(ry){ y = random(0, this.height);}
-            animal.push(new className(x,y,hunger, speed, this, this.animalId, gen));
+            if (rx) {
+                x = random(0, this.width);
+            }
+            if (ry) {
+                y = random(0, this.height);
+            }
+            if (rh) {
+                hunger = Math.floor(random(8, 12));
+            }
+            if (rs) {
+                speed = Math.floor(random(1, 2.3));
+            }
+            animals.push(new className(x, y, hunger, speed, this, this.animalId, gen));
             this.animalId++;
         }
     }
 
-    seedPlant(type, count, x, y, vel = 0) 
-    {
-        let classes = {'food':'Food'};
-        let className = eval(classes[type]);
-        let plant = eval("this.plants."+type);
+    seedPlant(type, count, x, y, vel) {
+        let className = eval(this.plantsTypes[type]);
+        let plants = eval("this.plants." + type);
         let rx = x == undefined;
         let ry = y == undefined;
+        let rv = vel == undefined;
         for (let i = 0; i < count; i++) {
-            if(rx){ x = random(0, this.width);}
-            if(ry){ y = random(0, this.height);}
-            plant.push(new className(x, y, vel));
+            if (rx) {
+                x = random(0, this.width);
+            }
+            if (ry) {
+                y = random(0, this.height);
+            }
+            if (rv) {
+                vel = random(1, 5);
+            }
+            plants.push(new className(x, y, vel));
         }
     }
 
     updatePlants() {
-        for(let plantType in this.plants){
-            
-            let type = eval("this.plants."+plantType);
+        for (let plantType in this.plants) {
+            let type = eval("this.plants." + plantType);
             for (let j = 0; j < type.length; j++) {
                 /* LATER CHANGE TO GIF
-                if (type[j].image.loaded()) {
-                    type[j].update(this);
-                }
-                */
+                 if (type[j].image.loaded()) {
+                 type[j].update(this);
+                 }
+                 */
                 type[j].update();
             }
         }
-        let type = eval("this.plants.food")
+
+        let type = eval("this.plants.food");
         for (let i = type.length - 1; i > 0; i--) {
             if (type[i].vel <= 0) {
                 type.splice(i, 1);
             }
         }
+
+        //Food spawn probability
         let prob = this.config.plants.food - type.length;
         let r = random(3, this.config.plants.food * 2);
         if (prob > r) {
@@ -63,23 +83,22 @@ class World extends WorldController {
 
     }
 
-    updateAnimals(){
-        for(let animalType in this.animals){
-            
-            let type = eval("this.animals."+animalType);
+    updateAnimals() {
+        for (let animalType in this.animals) {
+            let type = eval("this.animals." + animalType);
             for (let j = 0; j < type.length; j++) {
-                
+
                 if (type[j].image.loaded()) {
                     type[j].update();
                 }
 
-                if(type[j].hungry || type[j].readyToSpawn){
+                if (type[j].hungry || type[j].readyToSpawn) {
                     type[j].updateWorld(this);
                 }
 
                 if (type[j].checkSpawn() && type[j].sex == 1) {
                     this.spawnAnimal(animalType, 1, type[j].generation + 1,
-                    type[j].x, type[j].y);
+                        type[j].x, type[j].y);
                     console.log('SPAWNED!');
                     console.log(type[j].x);
                     console.log(type[j].y);
@@ -89,7 +108,6 @@ class World extends WorldController {
         }
     }
 
-    
 
     getTerrainType(x, y) {
         let freeSpace = true;

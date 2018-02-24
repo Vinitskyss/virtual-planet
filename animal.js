@@ -66,7 +66,7 @@ class Animal {
         if (this.hunger < 15) {
             return false;
         }
-        let type = eval("this.world.animals."+this.animalType);
+        let type = eval("this.world.animals." + this.animalType);
         for (let i = 0; i < type.length; i++) {
             let dist = Math.sqrt(Math.pow(this.x - type[i].x, 2) +
                 Math.pow(this.y - type[i].y, 2));
@@ -89,7 +89,7 @@ class Animal {
     }
 
     checkSpawn() {
-        let type = eval("this.world.animals."+this.animalType);
+        let type = eval("this.world.animals." + this.animalType);
         for (let i = 0; i < type.length; i++) {
             let newDist = Math.sqrt(Math.pow(this.x - type[i].x, 2) +
                 Math.pow(this.y - type[i].y, 2));
@@ -138,14 +138,14 @@ class Animal {
 
 
     endWalk() {
-        
+
         this.error = 0;
 
         try {
-            if(this.image.playing()){ 
+            if (this.image.playing()) {
                 this.image.pause();
-                this.image.frame(1);   
-               // console.log('ENDWALK')
+                this.image.frame(1);
+                // console.log('ENDWALK')
             }
         } catch (e) {
             console.log('img err');
@@ -154,7 +154,7 @@ class Animal {
     }
 
     walkTo(x, y) {
-        
+
         let targetX = Math.sign(Math.floor(x - this.x));
         let targetY = Math.sign(Math.floor(y - this.y));
         if (Math.pow(x - this.x, 2) < 2) {
@@ -172,8 +172,8 @@ class Animal {
             this.error++;
         }
         if (range > this.speed * 3) {
-            if(!this.image.playing()){
-                this.image.play();  
+            if (!this.image.playing()) {
+                this.image.play();
                 //console.log('PLAY');  
             }
             this.x += targetX * this.speed - this.error;
@@ -190,7 +190,7 @@ class Animal {
         console.log('died!');
     }
 
-    updateWorld(world){
+    updateWorld(world) {
         this.world = world;
     }
 

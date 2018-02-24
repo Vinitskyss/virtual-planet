@@ -1,69 +1,47 @@
-class WorldController{
-	constructor(config){
-		//prepare cfg
-		this.config = config;
-		this.prepareConfig(this.config);
-		
-		//prepare plants
-		this.plants = [];
-		this.plants.food = [];
-		//prepare animals
-		this.animalTypes = [];
-		this.animals = [];
-		this.animals.rabbits = [];
-		this.animals.wolfes = [];
-		this.prepareContainers();
+class WorldController {
+    constructor(config) {
+        //prepare cfg
+        this.config = config;
+        this.prepareConfig(this.config);
 
-		//set vars for world
-		this.width = this.config.world.width;
-		this.height = this.config.world.height;
-	}
+        //prepare plants
+        this.plantsTypes = {'food': 'Food'};
+        this.plants = [];
+        this.plants.food = [];
+        //prepare animals
+        this.animalTypes = {'rabbits': 'Rabbit'};
+        this.animals = [];
+        this.animals.rabbits = [];
+        this.animals.wolfes = [];
+        this.prepareContainers();
 
-	prepareConfig(){
-		
-		return;
-		if(typeof config.width == undefined){
-			config.width = 1000;
-		}
-		if(typeof config.height == undefined){
-			config.height == 600;
-		}
-		if('animals' in config){
-			
-		}else{
-			config.push({'animals':{}});
-			config.animals.push({'rabbits':0});
-			config.animals.rabbits = 0;
-		}
-		if(typeof config.plants == undefined){
-			config.plants.food = config.animals.rabbits * 4;
-		}
-	}
+        //set vars for world
+        this.width = this.config.world.width;
+        this.height = this.config.world.height;
+    }
 
-	prepareContainers(){
-		this.config.animalTypes = [];
-		for(let type in this.config.animals){
-			this.config.animalTypes.push(type);
-		}
-		return;
-		this.animals.rabbits = [];
-		if(config.animals.rabbits > 0){
-			
-		}
-		if(config.plants.food > 0){
-			this.plants.food = [];
-		}
-	}
+    prepareConfig() {
 
-	//system methods
 
-	getTerrainType(x, y) {
+    }
+
+    prepareContainers() {
+
+    }
+
+    //system methods
+
+    getTerrainType(x, y) {
 
         let freeSpace = true;
         if (x < 1 || x > this.width || y < 1 || y > this.height) {
             freeSpace = false;
         }
         return {freeSpace: freeSpace};
+    }
+
+    print(...names) {
+        for (let i = 0; i < names.length; i++) console.log(names[i]);
     }
 
 }

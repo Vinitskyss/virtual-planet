@@ -25,14 +25,14 @@ function setup() {
     let rabbitsCount = 10;
     let foodCount = rabbitsCount * 4;
     config = {
-        'world':{
-            'width':windowWidth,
-            'height':windowHeight,
+        'world': {
+            'width': windowWidth,
+            'height': windowHeight,
         },
-        'animals':{
-            'rabbits':rabbitsCount,
+        'animals': {
+            'rabbits': rabbitsCount,
         },
-        'plants':{
+        'plants': {
             'food': foodCount,
         }
     }

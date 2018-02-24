@@ -1,12 +1,13 @@
-class Food extends Plant{
-	constructor(x, y, vel){
-		super(x, y);
-		this.vel = random(1, vel);
+class Food extends Plant {
+    constructor(x, y, vel) {
+        super(x, y);
+        this.vel = random(1, vel);
         this.maxVel = 15;
         this.addRate = 0.01;
         this.image = loadImage('images/grassEmpty.png');
-	}
-	update() {
+    }
+
+    update() {
         if (this.vel <= 0) {
             return;
         }

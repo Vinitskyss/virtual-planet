@@ -1,5 +1,5 @@
-class Rabbit extends Vegan{
-	constructor(x, y, hunger, speed, world, image, id, gen) {
+class Rabbit extends Vegan {
+    constructor(x, y, hunger, speed, world, image, id, gen) {
         super(x, y, hunger, speed, world, image, id, gen);
         this.imageSrc = 'images/rabbit.gif';
         this.image = loadGif(this.imageSrc);

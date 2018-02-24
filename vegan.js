@@ -56,5 +56,5 @@ class Vegan extends Animal {
         return false;
     }
 
-    
+
 }
