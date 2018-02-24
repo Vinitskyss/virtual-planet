@@ -88,16 +88,16 @@ class Vegan extends Animal {
         for (let i = 0; i < type.length; i++) {
             let newDist = Math.sqrt(Math.pow(this.x - type[i].x, 2) +
                 Math.pow(this.y - type[i].y, 2));
-            if (this.world.vegans[i].sex != this.sex &&
-                this.world.vegans[i].hunger >= 15 &&
-                this.world.vegans[i].readyToSpawn == true &&
+            if (type[i].sex != this.sex &&
+                type[i].hunger >= 15 &&
+                type[i].readyToSpawn == true &&
                 newDist < 20) {
 
                 this.readyToSpawn = false;
-                this.world.vegans[i].readyToSpawn = false;
+                type[i].readyToSpawn = false;
                 this.hunger -= 4;
-                this.world.vegans[i].hunger -= 4;
-                return this.world.vegans[i].id;
+                type[i].hunger -= 4;
+                return type[i].id;
             }
 
         }

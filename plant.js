@@ -2,10 +2,6 @@ class Plant {
     constructor(x, y, vel) {
         this.x = x;
         this.y = y;
-        this.vel = random(1, vel);
-        this.maxVel = 15;
-        this.addRate = 0.01;
-        this.image = loadImage('images/grassEmpty.png');
     }
 
     update() {

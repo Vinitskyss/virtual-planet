@@ -52,15 +52,12 @@ class World extends WorldController {
 
     updateAnimals(){
         for(let animalType in this.animals){
-            console.log(animalType);
             
             let type = eval("this.animals."+animalType);
             for (let j = 0; j < type.length; j++) {
                 
                 if (type[j].image.loaded()) {
                     type[j].update(this);
-                    console.log(1);
-
                 }
 
                 if (type[j].checkSpawn() && type[j].sex == 1) {
