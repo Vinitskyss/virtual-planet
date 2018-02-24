@@ -1,31 +1,26 @@
 class Animal {
 
-    constructor(x, y, hunger, speed, world, image, id, gen) {
+    constructor(x, y, hunger, speed, world, id, gen) {
         this.id = id;
+        this.x = x;
+        this.y = y;
+        this.speed = speed;
         this.hunger = hunger;
+        this.world = world;
+        this.generation = gen;
         this.minHunger = 10;
         this.maxHunger = 20;
         this.hungry = this.hunger < this.minHunger;
-        this.x = x;
-        this.y = y;
         this.sex = Math.floor(random(0, 2));
-        this.generation = gen;
         this.targetX = 0;
         this.targetY = 0;
-        this.speed = speed;
         this.error = 0;
-        this.world = world;
         this.walkDistance = 40;
         this.descisionRate = 10;
         this.alive = true;
         this.foodTarget = -1;
         this.hungerDec = 0.01;
-        this.imageSrc = image;
-        this.image = loadGif(this.imageSrc);
-        this.image_dead = loadGif('images/skull.gif');
-        this.image.pause();
         this.readyToSpawn = false;
-
     }
 
 
@@ -146,19 +141,6 @@ class Animal {
         this.alive = false;
         this.image = this.image_dead;
         console.log('died!');
-    }
-
-    show() {
-        let sizes = [33, 53];
-        if (this.alive) {
-            sizes = [33, 53];
-        } else if (!this.alive) {
-            sizes = [32, 32];
-        }
-        image(this.image,
-            this.x - (sizes[0] / 2),
-            this.y - (sizes[1] / 2),
-            sizes[0], sizes[1]);
     }
 
     update(world) {

@@ -1,62 +1,34 @@
-class World {
-    constructor(width, height, plantsCount, veganCount, rabbitGif) {
-        this.width = width;
-        this.height = height;
-        this.plants = [];
-        this.vegans = [];
+class World extends WorldController {
+    constructor(config) {
+        super(config);
         this.animalId = 0;
-        this.veganCount = veganCount;
-        this.plantsCount = plantsCount;
-        this.rabbitGif = rabbitGif;
-        this.seedRabbits(this.veganCount, 1);
-        this.seedPlants(this.plantsCount, 10);
+        this.spawnAnimal('rabbits', this.config.animals.rabbits, 1);
     }
-
-    getMaxGeneration(name) {
-        let gen = 1;
-        let varname = eval("this." + name);
-        for (let i = 0; i < varname.length; i++) {
-            if (varname[i].generation > gen) {
-                gen = varname[i].generation;
-            }
-        }
-        return gen;
-    }
-
-    getTerrainType(x, y) {
-        let freeSpace = true;
-        if (x < 1 || x > this.width || y < 1 || y > this.height) {
-            freeSpace = false;
-        }
-        return {freeSpace: freeSpace};
-    }
-
-    getAnimalById(id, name) {
-        let varname = eval("this." + name);
-        for (let i = 0; i < varname.length; i++) {
-            if (varname[i].id == id) {
-                return varname[i];
-            }
-        }
-    }
-
-    seedRabbits(count, gen) {
+    
+    spawnAnimal(type, count, gen, x = random(0, this.width),
+    y = random(0, this.height), hunger = Math.floor(random(8, 12)),
+    speed = Math.floor(random(1, 2.3)))
+    {
+        let classes = {'rabbits':'Rabbit'};
+        let className = eval(classes[type]);
+        let animal = eval("this.animals."+type);
         for (let i = 0; i < count; i++) {
-            this.vegans.push(new Vegan(random(0, this.width), random(0, this.height),
-                Math.floor(random(8, 12)), Math.floor(random(1, 2.3)), this, this.rabbitGif, this.animalId, gen));
+            animal.push(new className(x,y,hunger, speed, this, this.animalId, gen));
             this.animalId++;
         }
     }
 
-    seedPlants(count, vel) {
+    
+
+    seedGrass(count, vel) {
         for (let i = 0; i < count; i++) {
             let x = random(0, this.width);
             let y = random(0, this.height);
-            this.plants.push(new Plant(x, y, vel));
+            this.plants.push(new Grass(x, y, vel));
         }
     }
 
-    updatePlants() {
+    updateGrass(){
         for (let i = 0; i < this.plants.length; i++) {
             this.plants[i].update();
         }
@@ -71,43 +43,53 @@ class World {
         if (prob > r) {
             this.seedPlants(1, 5);
         }
+    }
+
+    updatePlants() {
+        
 
     }
 
-    updateVegans() {
-        for (let i = 0; i < this.vegans.length; i++) {
-            if (this.vegans[i].image.loaded()) {
-                this.vegans[i].update(this);
-                let checkSpawn = this.vegans[i].checkSpawn();
-                if (checkSpawn && this.vegans[i].sex == 1) {
-                    let father = this.vegans[i];
-                    let mother = this.getAnimalById(checkSpawn, 'vegans');
-                    let gen = Math.max(father.generation, mother.generation);
-                    this.vegans.push(new Vegan(mother.x, mother.y,
-                        14, Math.floor(random(1, 2.3)), this, this.rabbitGif, this.animalId, gen + 1));
+    updateAnimals(){
+        for(let animalType in this.animals){
+            console.log(animalType);
+            
+            let type = eval("this.animals."+animalType);
+            for (let j = 0; j < type.length; j++) {
+                
+                if (type[j].image.loaded()) {
+                    type[j].update(this);
+                    console.log(1);
 
-                    this.animalId++;
+                }
 
+                if (type[j].checkSpawn() && type[j].sex == 1) {
+                    this.spawnAnimal(animalType, 1, type[j].generation + 1,
+                    type[j].x, type[j].y);
                     console.log('SPAWNED!');
-                    console.log(this.vegans[i].x);
-                    console.log(this.vegans[i].y);
+                    console.log(type[j].x);
+                    console.log(type[j].y);
                     console.log('======');
                 }
             }
         }
+    }
 
-        for (let i = this.vegans.length - 1; i > 0; i--) {
-            if (this.vegans[i].hunger <= -20) {
-                this.vegans.splice(i, 1);
-            }
+    
+
+    getTerrainType(x, y) {
+        let freeSpace = true;
+        if (x < 1 || x > this.width || y < 1 || y > this.height) {
+            freeSpace = false;
         }
+        return {freeSpace: freeSpace};
     }
 
     update() {
 
         this.updatePlants();
 
-        this.updateVegans();
+        this.updateAnimals();
 
     }
 
