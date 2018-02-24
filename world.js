@@ -1,12 +1,10 @@
-class World {
-    constructor(width, height, plantsCount, veganCount, rabbitGif) {
-        this.width = width;
-        this.height = height;
-        this.plants = [];
-        this.vegans = [];
+class World extends WorldController {
+    constructor(config) {
+        super(config);
         this.animalId = 0;
-        this.veganCount = veganCount;
-        this.plantsCount = plantsCount;
+        this.animalCount = animalCount;
+        this.veganCount = Math.floor();
+        this.plantsCount = Math.floor(this.veganCount * 4);
         this.rabbitGif = rabbitGif;
         this.seedRabbits(this.veganCount, 1);
         this.seedPlants(this.plantsCount, 10);
@@ -28,15 +26,15 @@ class World {
         }
     }
 
-    seedPlants(count, vel) {
+    seedGrass(count, vel) {
         for (let i = 0; i < count; i++) {
             let x = random(0, this.width);
             let y = random(0, this.height);
-            this.plants.push(new Plant(x, y, vel));
+            this.plants.push(new Grass(x, y, vel));
         }
     }
 
-    updatePlants() {
+    updateGrass(){
         for (let i = 0; i < this.plants.length; i++) {
             this.plants[i].update();
         }
@@ -51,6 +49,10 @@ class World {
         if (prob > r) {
             this.seedPlants(1, 5);
         }
+    }
+
+    updatePlants() {
+        
 
     }
 

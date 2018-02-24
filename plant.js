@@ -5,8 +5,6 @@ class Plant {
         this.vel = random(1, vel);
         this.maxVel = 15;
         this.addRate = 0.01;
-        //this.wait = 1500;
-        //this.cooldown = this.wait;
         this.image = loadImage('images/grassEmpty.png');
     }
 
@@ -21,7 +19,6 @@ class Plant {
     }
 
     grow() {
-
         if (this.vel < this.maxVel) {
             this.vel += this.addRate;
         }
