@@ -1,9 +1,7 @@
 let canvas;
-let veganCount = 10;
 let world;
-let plantsCount = veganCount * 4.5;
-
-let rabbitGif = 'images/rabbit.gif';
+let config;
+//background
 let groundGrass;
 let bgWidth = 200;
 let bgCols;
@@ -11,6 +9,7 @@ let bgRows;
 
 function setup() {
     frameRate(30);
+    //background
     groundGrass = loadImage('images/grass.png');
     canvas = createCanvas(windowWidth, windowHeight);
     bgCols = windowWidth / bgWidth;
@@ -21,7 +20,23 @@ function setup() {
     if (bgWidth % windowHeight > 0) {
         bgRows++;
     }
-    world = new World(width, height, Math.floor(plantsCount), veganCount, rabbitGif);
+
+    //init world
+    let rabbitsCount = 10;
+    let foodCount = rabbitsCount * 4;
+    config = {
+        'world':{
+            'width':windowWidth,
+            'height':windowHeight,
+        },
+        'animals':{
+            'rabbits':rabbitsCount,
+        },
+        'plants':{
+            'food': foodCount,
+        }
+    }
+    world = new World(config);
 
 }
 

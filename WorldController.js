@@ -1,43 +1,69 @@
 class WorldController{
 	constructor(config){
-		
 		//prepare cfg
 		this.config = config;
 		this.prepareConfig(this.config);
 		
-		//prepare containers
+		//prepare plants
 		this.plants = [];
+		this.plants.food = [];
+		//prepare animals
+		this.animalTypes = [];
 		this.animals = [];
+		this.animals.rabbits = [];
+		this.animals.wolfes = [];
 		this.prepareContainers();
 
 		//set vars for world
-		this.width = config.world.width;
-		this.height = config.world.height;
-
-		//set vars for plants
-		this.plants.food = config.plants.food;
-
-		//set vars for animals
-		this.animals.rabbits = config.animals.rabbits;
-
+		this.width = this.config.world.width;
+		this.height = this.config.world.height;
 	}
 
 	prepareConfig(){
-		if(config.width == undefined){
+		
+		return;
+		if(typeof config.width == undefined){
 			config.width = 1000;
 		}
-		if(config.height == undefined){
+		if(typeof config.height == undefined){
 			config.height == 600;
 		}
-		if(config.animals.rabbits == undefined){
+		if('animals' in config){
+			
+		}else{
+			config.push({'animals':{}});
+			config.animals.push({'rabbits':0});
 			config.animals.rabbits = 0;
 		}
-		if(config.plants.food == undefined){
+		if(typeof config.plants == undefined){
 			config.plants.food = config.animals.rabbits * 4;
 		}
 	}
 
 	prepareContainers(){
-		if(config.animals.rabbits)
+		this.config.animalTypes = [];
+		for(let type in this.config.animals){
+			this.config.animalTypes.push(type);
+		}
+		return;
+		this.animals.rabbits = [];
+		if(config.animals.rabbits > 0){
+			
+		}
+		if(config.plants.food > 0){
+			this.plants.food = [];
+		}
 	}
+
+	//system methods
+
+	getTerrainType(x, y) {
+
+        let freeSpace = true;
+        if (x < 1 || x > this.width || y < 1 || y > this.height) {
+            freeSpace = false;
+        }
+        return {freeSpace: freeSpace};
+    }
+
 }

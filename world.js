@@ -2,29 +2,23 @@ class World extends WorldController {
     constructor(config) {
         super(config);
         this.animalId = 0;
-        this.animalCount = animalCount;
-        this.veganCount = Math.floor();
-        this.plantsCount = Math.floor(this.veganCount * 4);
-        this.rabbitGif = rabbitGif;
-        this.seedRabbits(this.veganCount, 1);
-        this.seedPlants(this.plantsCount, 10);
+        this.spawnAnimal('rabbits', this.config.animals.rabbits, 1);
     }
+    
+    spawnAnimal(type, count, gen, x = random(0, this.width),
+    y = random(0, this.height), hunger = Math.floor(random(8, 12)),
+    speed = Math.floor(random(1, 2.3)))
+    {
+        let classes = {'rabbits':'Rabbit'};
+        let className = eval(classes[type]);
 
-    getTerrainType(x, y) {
-        let freeSpace = true;
-        if (x < 1 || x > this.width || y < 1 || y > this.height) {
-            freeSpace = false;
-        }
-        return {freeSpace: freeSpace};
-    }
-
-    seedRabbits(count, gen) {
+        let animal = eval("this.animals."+type);
         for (let i = 0; i < count; i++) {
-            this.vegans.push(new Vegan(random(0, this.width), random(0, this.height),
-                Math.floor(random(8, 12)), Math.floor(random(1, 2.3)), this, this.rabbitGif, this.animalId, gen));
+            animal.push(new className(x,y,hunger, speed, this, this.animalId, gen));
             this.animalId++;
         }
     }
+
 
     seedGrass(count, vel) {
         for (let i = 0; i < count; i++) {
@@ -56,22 +50,33 @@ class World extends WorldController {
 
     }
 
-    updateVegans() {
-        for (let i = 0; i < this.vegans.length; i++) {
-            if (this.vegans[i].image.loaded()) {
-                this.vegans[i].update(this);
+    updateAnimals(){
+        for(let animalType in this.animals){
+            console.log(animalType);
+            
+            let type = eval("this.animals."+animalType);
+            for (let j = 0; j < type.length; j++) {
+                
+                if (type[j].image.loaded()) {
+                    type[j].update(this);
+                    console.log(1);
 
-                if (this.vegans[i].checkSpawn() && this.vegans[i].sex == 1) {
-                    this.vegans.push(new Vegan(this.vegans[i].x, this.vegans[i].y,
-                        14, Math.floor(random(1, 2.3)), this, this.rabbitGif, this.animalId, this.vegans[i].generation + 1));
-                    this.animalId++;
+                }
+
+                if (type[j].checkSpawn() && type[j].sex == 1) {
+                    this.spawnAnimal(animalType, 1, type[j].generation + 1,
+                    type[j].x, type[j].y);
                     console.log('SPAWNED!');
-                    console.log(this.vegans[i].x);
-                    console.log(this.vegans[i].y);
+                    console.log(type[j].x);
+                    console.log(type[j].y);
                     console.log('======');
                 }
             }
         }
+    }
+
+    updateVegans() {
+        
 
         for (let i = this.vegans.length - 1; i > 0; i--) {
             if (this.vegans[i].hunger <= -20) {
@@ -84,7 +89,7 @@ class World extends WorldController {
 
         this.updatePlants();
 
-        this.updateVegans();
+        this.updateAnimals();
 
     }
 
