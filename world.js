@@ -3,50 +3,63 @@ class World extends WorldController {
         super(config);
         this.animalId = 0;
         this.spawnAnimal('rabbits', this.config.animals.rabbits, 1);
+        this.seedPlant('food', this.config.plants.food);
     }
     
-    spawnAnimal(type, count, gen, x = random(0, this.width),
-    y = random(0, this.height), hunger = Math.floor(random(8, 12)),
+    spawnAnimal(type, count, gen, x,y, hunger = Math.floor(random(8, 12)),
     speed = Math.floor(random(1, 2.3)))
     {
         let classes = {'rabbits':'Rabbit'};
         let className = eval(classes[type]);
         let animal = eval("this.animals."+type);
+        let rx = x == undefined;
+        let ry = y == undefined;
         for (let i = 0; i < count; i++) {
+            if(rx){ x = random(0, this.width);}
+            if(ry){ y = random(0, this.height);}
             animal.push(new className(x,y,hunger, speed, this, this.animalId, gen));
             this.animalId++;
         }
     }
 
-    
-
-    seedGrass(count, vel) {
+    seedPlant(type, count, x, y, vel = 0) 
+    {
+        let classes = {'food':'Food'};
+        let className = eval(classes[type]);
+        let plant = eval("this.plants."+type);
+        let rx = x == undefined;
+        let ry = y == undefined;
         for (let i = 0; i < count; i++) {
-            let x = random(0, this.width);
-            let y = random(0, this.height);
-            this.plants.push(new Grass(x, y, vel));
-        }
-    }
-
-    updateGrass(){
-        for (let i = 0; i < this.plants.length; i++) {
-            this.plants[i].update();
-        }
-
-        for (let i = this.plants.length - 1; i > 0; i--) {
-            if (this.plants[i].vel <= 0) {
-                this.plants.splice(i, 1);
-            }
-        }
-        let prob = this.plantsCount - this.plants.length;
-        let r = random(3, this.plantsCount * 2);
-        if (prob > r) {
-            this.seedPlants(1, 5);
+            if(rx){ x = random(0, this.width);}
+            if(ry){ y = random(0, this.height);}
+            plant.push(new className(x, y, vel));
         }
     }
 
     updatePlants() {
-        
+        for(let plantType in this.plants){
+            
+            let type = eval("this.plants."+plantType);
+            for (let j = 0; j < type.length; j++) {
+                /* LATER CHANGE TO GIF
+                if (type[j].image.loaded()) {
+                    type[j].update(this);
+                }
+                */
+                type[j].update();
+            }
+        }
+        let type = eval("this.plants.food")
+        for (let i = type.length - 1; i > 0; i--) {
+            if (type[i].vel <= 0) {
+                type.splice(i, 1);
+            }
+        }
+        let prob = this.config.plants.food - type.length;
+        let r = random(3, this.config.plants.food * 2);
+        if (prob > r) {
+            this.seedPlant('food', 1);
+        }
 
     }
 

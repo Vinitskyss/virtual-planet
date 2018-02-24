@@ -63,6 +63,52 @@ class Animal {
         }
     }
 
+    goSpawn() {
+        if (this.hunger < 15) {
+            return false;
+        }
+        let type = eval("this.world.animals."+this.animalType);
+        for (let i = 0; i < type.length; i++) {
+            let dist = Math.sqrt(Math.pow(this.x - type[i].x, 2) +
+                Math.pow(this.y - type[i].y, 2));
+            if (type[i].sex != this.sex &&
+                type[i].hunger > 15
+                //&& type[i].readyToSpawn == false
+                && dist < 500
+            ) {
+                console.log(dist);
+                this.readyToSpawn = true;
+                type[i].readyToSpawn = true;
+                this.targetX = type[i].x;
+                this.targetY = type[i].y;
+                console.log(this.targetX);
+                console.log(this.targetY);
+                console.log('============')
+                return;
+            }
+        }
+    }
+
+    checkSpawn() {
+        let type = eval("this.world.animals."+this.animalType);
+        for (let i = 0; i < type.length; i++) {
+            let newDist = Math.sqrt(Math.pow(this.x - type[i].x, 2) +
+                Math.pow(this.y - type[i].y, 2));
+            if (type[i].sex != this.sex &&
+                type[i].hunger >= 15 &&
+                type[i].readyToSpawn == true &&
+                newDist < 20) {
+
+                this.readyToSpawn = false;
+                type[i].readyToSpawn = false;
+                this.hunger -= 4;
+                type[i].hunger -= 4;
+                return type[i].id;
+            }
+
+        }
+        return false;
+    }
 
     move() {
 
