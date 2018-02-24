@@ -75,14 +75,11 @@ class Animal {
                 //&& type[i].readyToSpawn == false
                 && dist < 500
             ) {
-                console.log(dist);
                 this.readyToSpawn = true;
                 type[i].readyToSpawn = true;
                 this.targetX = type[i].x;
                 this.targetY = type[i].y;
-                console.log(this.targetX);
-                console.log(this.targetY);
-                console.log('============')
+                this.world.print('GO SPAWN', this.targetX, this.targetY);
                 return;
             }
         }

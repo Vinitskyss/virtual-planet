@@ -99,10 +99,7 @@ class World extends WorldController {
                 if (type[j].checkSpawn() && type[j].sex == 1) {
                     this.spawnAnimal(animalType, 1, type[j].generation + 1,
                         type[j].x, type[j].y);
-                    console.log('SPAWNED!');
-                    console.log(type[j].x);
-                    console.log(type[j].y);
-                    console.log('======');
+                    this.print("SPAWNED", type[j].x, type[j].y);
                 }
             }
         }
