@@ -9,10 +9,10 @@ class WorldController {
         this.plants = [];
         this.plants.food = [];
         //prepare animals
-        this.animalTypes = {'rabbits': 'Rabbit'};
+        this.animalTypes = {'rabbits': 'Rabbit', 'wolves': 'Wolf'};
         this.animals = [];
         this.animals.rabbits = [];
-        this.animals.wolfes = [];
+        this.animals.wolves = [];
         this.prepareContainers();
 
         //set vars for world
@@ -41,8 +41,8 @@ class WorldController {
     }
 
     print(...names) {
-        for (let i = 0; i < names.length; i++){
-          console.log(names[i]);  
+        for (let i = 0; i < names.length; i++) {
+            console.log(names[i]);
         }
         console.log("===========");
 

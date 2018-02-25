@@ -22,8 +22,10 @@ function setup() {
     }
 
     //init world
-    let rabbitsCount = 10;
+    let wolvesCount = 5;
+    let rabbitsCount = wolvesCount * 4;
     let foodCount = rabbitsCount * 4;
+
     config = {
         'world': {
             'width': windowWidth,
@@ -31,6 +33,7 @@ function setup() {
         },
         'animals': {
             'rabbits': rabbitsCount,
+            'wolves': wolvesCount,
         },
         'plants': {
             'food': foodCount,

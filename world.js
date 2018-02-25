@@ -3,6 +3,7 @@ class World extends WorldController {
         super(config);
         this.animalId = 0;
         this.spawnAnimal('rabbits', this.config.animals.rabbits, 1);
+        this.spawnAnimal('wolves', this.config.animals.wolves, 1);
         this.seedPlant('food', this.config.plants.food);
     }
 
@@ -31,6 +32,18 @@ class World extends WorldController {
             }
             animals.push(new className(x, y, hunger, speed, this, this.animalId, gen));
             this.animalId++;
+        }
+    }
+
+    killAnimal(id) {
+        console.log('die');
+        for (let animal in this.animalTypes) {
+            let type = eval("this.animals." + animal);
+            for (let i = 0; i < type.length; i++) {
+                if (type[i].id == id) {
+                    type[i].die();
+                }
+            }
         }
     }
 
@@ -93,10 +106,11 @@ class World extends WorldController {
                 }
 
                 //reasons to update world in each animal
-                if (type[j].hungry || type[j].readyToSpawn || true) {
-                    type[j].updateWorld(this);
-                }
-
+                /*
+                 if (type[j].hungry || type[j].readyToSpawn || true) {
+                 //type[j].updateWorld(this);
+                 }
+                 */
                 if (type[j].checkSpawn() && type[j].sex == 1) {
                     this.spawnAnimal(animalType, 1, type[j].generation + 1, type[j].x, type[j].y);
                     this.print("SPAWNED", type[j].x, type[j].y);

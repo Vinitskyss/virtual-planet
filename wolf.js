@@ -1,7 +1,7 @@
-class Rabbit extends Vegan {
+class Wolf extends Carnivore {
     constructor(x, y, hunger, speed, world, image, id, gen) {
         super(x, y, hunger, speed, world, image, id, gen);
-        this.imageSrc = 'images/rabbit.gif';
+        this.imageSrc = 'images/wolf.gif';
         this.image = loadGif(this.imageSrc);
         this.image_dead = loadGif('images/skull.gif');
         this.image.pause();
@@ -10,15 +10,16 @@ class Rabbit extends Vegan {
         this.hungerDec = random(0.01, 0.03);
         this.walkDistance = 40;
         this.decisionRate = 10;
-        this.hungerDec = 0.01;
-        this.animalType = 'rabbits';
-        this.stopFrame = 1;
+        this.hungerDec = 0.001;
+        this.animalType = 'wolves';
+        this.stopFrame = 5;
+
     }
 
     show() {
-        let sizes = [33, 53];
+        let sizes = [64, 64];
         if (this.alive) {
-            sizes = [33, 53];
+            //sizes = [100, 50];
         } else if (!this.alive) {
             sizes = [32, 32];
         }

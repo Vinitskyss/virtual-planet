@@ -133,7 +133,7 @@ class Animal {
         try {
             if (this.image.playing()) {
                 this.image.pause();
-                this.image.frame(1);
+                this.image.frame(this.stopFrame);
             }
         } catch (e) {
             console.log('img err');
@@ -174,10 +174,11 @@ class Animal {
         console.log('died!');
     }
 
-    updateWorld(world) {
-        this.world = world;
-    }
-
+    /*
+     updateWorld(world) {
+     this.world = world;
+     }
+     */
     update() {
 
         if (this.hunger <= 0 && this.alive) {
