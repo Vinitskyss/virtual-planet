@@ -26,12 +26,15 @@ class Animal {
 
     generateIdleTarget() {
         let done = false;
+        let pref;
         while (!done) {
             let x = random(-this.walkDistance + this.x, this.walkDistance + this.x);
             let y = random(-this.walkDistance + this.y, this.walkDistance + this.y);
             if (this.world.getTerrainType(x, y).freeSpace) {
                 done = true;
+                //pref = this.genPrefTarget();
             }
+
             this.targetX = x;
             this.targetY = y;
         }

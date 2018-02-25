@@ -10,7 +10,7 @@ let bgRows;
 function setup() {
     frameRate(30);
     //background
-    groundGrass = loadImage('images/grass.png');
+    groundGrass = loadImage('src/images/grass.png');
     canvas = createCanvas(windowWidth, windowHeight);
     bgCols = windowWidth / bgWidth;
     bgRows = windowHeight / bgWidth;

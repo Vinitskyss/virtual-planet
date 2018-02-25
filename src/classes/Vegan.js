@@ -53,4 +53,25 @@ class Vegan extends Animal {
         }
         return false;
     }
+
+    genPrefTarget() {
+        let x = 0;
+        let y = 0;
+        let count = 0;
+        for (let i = 0; i < this.world.plants.food.length; i++) {
+            if (this.world.plants.food[i].vel > 0) {
+                let newDist = Math.sqrt(Math.pow(this.x - this.world.plants.food[i].x, 2) +
+                    Math.pow(this.y - this.world.plants.food[i].y, 2));
+                if (newDist < this.walkDistance) {
+                    x += this.world.plants.food[i].x;
+                    y += this.world.plants.food[i].y;
+                    count += 1;
+                }
+            }
+        }
+        if (count == 0) {
+            return [0, 0];
+        }
+        return [x / count, y / count];
+    }
 }

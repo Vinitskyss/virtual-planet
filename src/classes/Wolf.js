@@ -1,9 +1,9 @@
 class Wolf extends Carnivore {
     constructor(x, y, hunger, speed, world, image, id, gen) {
         super(x, y, hunger, speed, world, image, id, gen);
-        this.imageSrc = 'images/wolf.gif';
+        this.imageSrc = 'src/images/wolf.gif';
         this.image = loadGif(this.imageSrc);
-        this.image_dead = loadGif('images/skull.gif');
+        this.image_dead = loadGif('src/images/skull.gif');
         this.image.pause();
         this.minHunger = 10;
         this.maxHunger = 20;

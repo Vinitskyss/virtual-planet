@@ -59,4 +59,27 @@ class Carnivore extends Animal {
         }
         return false;
     }
+
+    genPrefTarget() {
+        let x = 0;
+        let y = 0;
+        let count = 0;
+        let targets = this.world.animals.rabbits;
+        for (let i = 0; i < targets.length; i++) {
+            if (targets[i].alive) {
+                let newDist = Math.sqrt(Math.pow(this.x - targets[i].x, 2) +
+                    Math.pow(this.y - targets[i].y, 2));
+                if (newDist < this.walkDistance) {
+                    x += targets[i].x;
+                    y += targets[i].y;
+                    count += 1;
+                }
+            }
+
+        }
+        if (count == 0) {
+            return [0, 0];
+        }
+        return [x / count, y / count];
+    }
 }

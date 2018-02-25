@@ -1,9 +1,9 @@
 class Rabbit extends Vegan {
     constructor(x, y, hunger, speed, world, image, id, gen) {
         super(x, y, hunger, speed, world, image, id, gen);
-        this.imageSrc = 'images/rabbit.gif';
+        this.imageSrc = 'src/images/rabbit.gif';
         this.image = loadGif(this.imageSrc);
-        this.image_dead = loadGif('images/skull.gif');
+        this.image_dead = loadGif('src/images/skull.gif');
         this.image.pause();
         this.minHunger = 10;
         this.maxHunger = 20;

@@ -3,7 +3,7 @@ class World extends WorldController {
         super(config);
         this.animalId = 0;
         this.spawnAnimal('rabbits', this.config.animals.rabbits, 1, undefined, undefined, undefined, random(1, 2.3));
-        this.spawnAnimal('wolves', this.config.animals.wolves, 1, undefined, undefined, undefined, random(0.9, 2));
+        this.spawnAnimal('wolves', this.config.animals.wolves, 1, undefined, undefined, undefined, random(0.5, 1.6));
         this.seedPlant('food', this.config.plants.food);
     }
 

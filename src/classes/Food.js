@@ -4,7 +4,7 @@ class Food extends Plant {
         this.vel = random(1, vel);
         this.maxVel = 15;
         this.addRate = 0.01;
-        this.image = loadImage('images/grassEmpty.png');
+        this.image = loadImage('src/images/grassEmpty.png');
     }
 
     update() {
@@ -25,14 +25,9 @@ class Food extends Plant {
 
     setImage() {
         if (this.vel < this.maxVel / 2) {
-            this.image = loadImage('images/grassEmpty.png');
+            this.image = loadImage('src/images/grassEmpty.png');
         } else {
-            this.image = loadImage('images/grassFull.png');
+            this.image = loadImage('src/images/grassFull.png');
         }
-    }
-
-
-    show() {
-        image(this.image, this.x, this.y, this.image.width, this.image.height);
     }
 }
