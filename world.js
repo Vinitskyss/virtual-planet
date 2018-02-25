@@ -2,8 +2,8 @@ class World extends WorldController {
     constructor(config) {
         super(config);
         this.animalId = 0;
-        this.spawnAnimal('rabbits', this.config.animals.rabbits, 1);
-        this.spawnAnimal('wolves', this.config.animals.wolves, 1);
+        this.spawnAnimal('rabbits', this.config.animals.rabbits, 1, undefined, undefined, undefined, random(1, 2.3));
+        this.spawnAnimal('wolves', this.config.animals.wolves, 1, undefined, undefined, undefined, random(0.9, 2));
         this.seedPlant('food', this.config.plants.food);
     }
 
@@ -25,10 +25,10 @@ class World extends WorldController {
                 y = random(0, this.height);
             }
             if (rh) {
-                hunger = Math.floor(random(8, 12));
+                hunger = random(8, 12);
             }
             if (rs) {
-                speed = Math.floor(random(1, 2.3));
+                speed = random(1, 2.3);
             }
             animals.push(new className(x, y, hunger, speed, this, this.animalId, gen));
             this.animalId++;
