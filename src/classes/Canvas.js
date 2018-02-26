@@ -6,14 +6,22 @@ let groundGrass;
 let bgWidth = 200;
 let bgCols;
 let bgRows;
-
+let width = 5000;
+let height = 2800;
 function setup() {
     frameRate(30);
     //background
+    if (width == undefined) {
+        width = windowWidth;
+    }
+    if (height == undefined) {
+        height = windowHeight;
+    }
     groundGrass = loadImage('src/images/grass.png');
-    canvas = createCanvas(windowWidth, windowHeight);
-    bgCols = windowWidth / bgWidth;
-    bgRows = windowHeight / bgWidth;
+    canvas = createCanvas(width, height);
+    //canvas.parent('canvas');
+    bgCols = width / bgWidth;
+    bgRows = height / bgWidth;
     if (bgWidth % windowWidth > 0) {
         bgCols++;
     }
@@ -28,8 +36,8 @@ function setup() {
 
     config = {
         'world': {
-            'width': windowWidth,
-            'height': windowHeight,
+            'width': width,
+            'height': height,
         },
         'animals': {
             'rabbits': rabbitsCount,

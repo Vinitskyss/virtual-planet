@@ -73,7 +73,7 @@ class Animal {
             if (type[i].sex != this.sex &&
                 type[i].hunger > 15
                 //&& type[i].readyToSpawn == false
-                && dist < 500
+                && (dist < this.world.width / 3 || dist < this.world.height / 3)
             ) {
                 this.readyToSpawn = true;
                 type[i].readyToSpawn = true;

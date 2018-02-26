@@ -93,7 +93,6 @@ class World extends WorldController {
         if (prob > r) {
             this.seedPlant('food', 1);
         }
-
     }
 
     updateAnimals() {
@@ -132,5 +131,4 @@ class World extends WorldController {
         this.updateAnimals();
 
     }
-
 }
