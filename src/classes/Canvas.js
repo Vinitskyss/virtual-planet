@@ -6,8 +6,8 @@ let groundGrass;
 let bgWidth = 200;
 let bgCols;
 let bgRows;
-let width = 5000;
-let height = 2800;
+let width;
+let height;
 function setup() {
     frameRate(30);
     //background
