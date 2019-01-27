@@ -6,10 +6,13 @@ let groundGrass;
 let bgWidth = 200;
 let bgCols;
 let bgRows;
-let width;
-let height;
+let width = 1000;
+let height = 400;
+
+let gif;
 
 function setup() {
+
     frameRate(30);
     //background
     if(width == undefined) {
@@ -48,16 +51,21 @@ function setup() {
             'food': foodCount,
         }
     }
-    world = new World(config);
-
+    //world = new World(config);
+    gif = loadGif('src/images/skull.gif');
+    
 }
 
 function draw() {
+  //image(gif, 10,10, 10, 10);
+    return ;
     noStroke();
     for(let y = 0; y < bgRows; y++) {
         for(let x = 0; x < bgCols; x++) {
             image(groundGrass, x * bgWidth, y * bgWidth, bgWidth, bgWidth);
         }
     }
+
     world.update();
+
 }

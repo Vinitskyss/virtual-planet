@@ -3,6 +3,7 @@ class Rabbit extends Vegan {
         super(x, y, hunger, speed, world, image, id, gen);
         this.imageSrc = 'src/images/rabbit.gif';
         this.image = loadGif(this.imageSrc);
+        console.log(this.image);
         this.image_dead = loadGif('src/images/skull.gif');
         this.image.pause();
         this.minHunger = 10;
