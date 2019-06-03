@@ -69,7 +69,9 @@ class World extends WorldController {
 
     updatePlants() {
         for (let plantType in this.plants) {
+            
             let type = eval("this.plants." + plantType);
+
             for (let j = 0; j < type.length; j++) {
                 /* LATER CHANGE TO GIF
                  if (type[j].image.loaded()) {
@@ -99,12 +101,13 @@ class World extends WorldController {
 
         for (let animalType in this.animals) {
             let type = eval("this.animals." + animalType);
-            for (let j = 0; j < type.length; j++) {
-                //console.log(type[j].image);
-                if (type[j].image.loaded()) {
 
+            for (let j = 0; j < type.length; j++) {
+               console.log(type[j].image);
+                //if (type[j].image.loaded()) {
                     type[j].update();
-                }
+
+                //}
 
                 //reasons to update world in each animal
                 /*

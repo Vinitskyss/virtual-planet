@@ -35,7 +35,7 @@ function setup() {
 
     //init world
     let wolvesCount = 5;
-    let rabbitsCount = wolvesCount * 4;
+    let rabbitsCount = 10;
     let foodCount = rabbitsCount * 4;
 
     config = {
@@ -51,14 +51,13 @@ function setup() {
             'food': foodCount,
         }
     }
-    //world = new World(config);
+    world = new World(config);
     gif = loadGif('src/images/skull.gif');
-    
 }
 
 function draw() {
-  //image(gif, 10,10, 10, 10);
-    return ;
+    //image(gif, 10,10, 10, 10);
+
     noStroke();
     for(let y = 0; y < bgRows; y++) {
         for(let x = 0; x < bgCols; x++) {

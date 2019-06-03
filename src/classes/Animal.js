@@ -133,6 +133,7 @@ class Animal {
 
     endWalk() {
         this.error = 0;
+        return;
         try {
             if (this.image.playing()) {
                 this.image.pause();
@@ -161,9 +162,11 @@ class Animal {
             this.error++;
         }
         if (range > this.speed * 3) {
+            /*
             if (!this.image.playing()) {
                 this.image.play();
             }
+            */
             this.x += targetX * this.speed - this.error;
             this.y += targetY * this.speed - this.error;
         } else {
