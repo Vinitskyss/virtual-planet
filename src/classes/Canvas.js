@@ -35,7 +35,7 @@ function setup() {
 
     //init world
     let wolvesCount = 5;
-    let rabbitsCount = 10;
+    let rabbitsCount = wolvesCount * 5;
     let foodCount = rabbitsCount * 4;
 
     config = {
