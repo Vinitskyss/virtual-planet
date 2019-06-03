@@ -7,7 +7,7 @@ let bgWidth = 200;
 let bgCols;
 let bgRows;
 let width = 1000;
-let height = 400;
+let height = 700;
 
 let gif;
 
