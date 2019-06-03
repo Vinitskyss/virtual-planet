@@ -103,7 +103,7 @@ class World extends WorldController {
             let type = eval("this.animals." + animalType);
 
             for (let j = 0; j < type.length; j++) {
-               console.log(type[j].image);
+               //console.log(type[j].image);
                 //if (type[j].image.loaded()) {
                     type[j].update();
 
